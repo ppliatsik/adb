@@ -1,0 +1,19 @@
+{:http/service {:port              8082
+                :db                #ig/ref :db/pg
+                :adb-devices       #ig/ref :adb/devices
+                :build             :dev
+                :host              "0.0.0.0"
+                :server-address    "http://localhost:8888"
+                :download-path     "resources/photos/"
+                :android-base-path "/sdcard/Pictures/"}
+
+ :db/pg {:server-name       "localhost"
+         :database-name     "adb"
+         :username          "test"
+         :password          "test"
+         :adapter           "postgresql"
+         :port-number       15432
+         :minimum-idle      3
+         :maximum-pool-size 15}
+
+ :adb/devices {}}
