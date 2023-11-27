@@ -16,7 +16,7 @@ services:
     image: mdillon/postgis
     container_name: adb-db
     volumes:
-      - ./db-init:/docker-entrypoint-initdb.d
+      #- ./db-init:/docker-entrypoint-initdb.d
       - ./dbdata:/var/lib/postgresql/data
     ports:
       - '15432:5432'
