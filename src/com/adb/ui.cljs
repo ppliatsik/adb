@@ -54,7 +54,7 @@
       [:footer
        [:div.content.has-text-centered.mt-4
         [:div.content.has-text-centered.m-2.p-2
-         [:span "Παναγιώτης Πλιάτσικας iscdm322017, Ψηφιακή Εγκληματολογία, Χειμερινό Εξάμηνο 2023-2024"]]]]]]))
+         [:span "Ψηφιακή Εγκληματολογία, Χειμερινό Εξάμηνο 2023-2024"]]]]]]))
 
 (rf/reg-event-fx
   ::load-success
