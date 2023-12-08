@@ -8,7 +8,11 @@
             [goog.object]
             [com.adb.ui.form :as form]
             [com.adb.ui.notifications-bar :as ui.notifications-bar]
-            [com.adb.mobile.ui.view :as mobile.view]))
+            [com.adb.mobile.ui.photos.view :as mobile.photos.view]
+            [com.adb.mobile.ui.calls.view :as mobile.calls.view]
+            [com.adb.mobile.ui.contacts.view :as mobile.contacts.view]
+            [com.adb.mobile.ui.sms.view :as mobile.sms.view]
+            ))
 
 (rf/reg-fx
   :page-title
@@ -30,19 +34,40 @@
   [:article.box
    [ui.navbar/view]
    [:div.icons-wrapper.columns.is-multiline
-    [:div.column
-     [:a.button.is-link.m-1
-      {:href (routes/mobile-data-view)}
-      [form/icons {:icon     :mobile
+    [:div.column.is-12
+     [:a.button.is-link.m-1.is-fullwidth
+      {:href (routes/mobile-photos)}
+      [form/icons {:icon     :camera
                    :icon-css "fa-2x is-white"}]
-      [:span "Προβολή και αναζήτηση αρχείων"]]]]])
+      [:span "Προβολή και αναζήτηση φωτογραφιών"]]]
+    [:div.column.is-12
+     [:a.button.is-link.m-1.is-fullwidth
+      {:href (routes/mobile-sms)}
+      [form/icons {:icon     :envelope
+                   :icon-css "fa-2x is-white"}]
+      [:span "Προβολή και αναζήτηση SMS"]]]
+    [:div.column.is-12
+     [:a.button.is-link.m-1.is-fullwidth
+      {:href (routes/mobile-calls)}
+      [form/icons {:icon     :phone
+                   :icon-css "fa-2x is-white"}]
+      [:span "Προβολή και αναζήτηση κλήσεων"]]]
+    [:div.column.is-12
+     [:a.button.is-link.m-1.is-fullwidth
+      {:href (routes/mobile-contacts)}
+      [form/icons {:icon     :user
+                   :icon-css "fa-2x is-white"}]
+      [:span "Προβολή και αναζήτηση επαφών"]]]]])
 
 (defn child-view []
   (fn []
     (let [current-view @(rf/subscribe [:ui/get-view])]
       (rf/dispatch [::ui.breadcrumb/set-breadcrumb current-view])
       (cond
-        (= current-view :com.adb.mobile/view) [mobile.view/view]
+        (= current-view :com.adb.mobile/photos)   [mobile.photos.view/view]
+        (= current-view :com.adb.mobile/calls)    [mobile.calls.view/view]
+        (= current-view :com.adb.mobile/contacts) [mobile.contacts.view/view]
+        (= current-view :com.adb.mobile/sms)      [mobile.sms.view/view]
         :else [main-view]))))
 
 (defn app []

@@ -6,6 +6,10 @@
    :camera        'fa-camera
    :trash         'fa-trash
    :mobile        'fa-mobile
+   :phone         'fa-phone
+   :envelope      'fa-envelope
+   :user          'fa-user
+   :check         'fa-check-circle
    :search        'fa-search})
 
 (defn icons

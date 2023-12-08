@@ -4,40 +4,25 @@
             [com.adb.system.android :as system.android]
             [com.adb.mobile.data :as mobile.data]))
 
-(defn save-all
+(defn save-photos
   [{:keys [db download-path android-base-path adb-devices] :as request}]
-  (let [data (system.android/download-device-data request)]
-    (mobile.data/save-all-mobile-data db data)
-    (if (> (count adb-devices) 0)
+  (let [data (system.android/download-devices-photos request)]
+    (mobile.data/save-mobile-photos db data)
+    (if (seq adb-devices)
       {:status 200
        :result :success}
       {:status 400
        :result :no-device-found})))
 
-(defn get-all
+(defn get-photos
   [{:keys [db] :as request}]
-  (let [data (mobile.data/get-mobile-data db)]
+  (let [data (mobile.data/get-mobile-photos db)]
     {:status 200
      :body   data}))
 
-(defn get-record
+(defn show-photo-record-image
   [{:keys [db parameters] :as request}]
-  (let [record (mobile.data/get-mobile-data-record db (:path parameters))]
-    (if record
-      {:status  200
-       :body    record}
-      {:status 404
-       :result :not-found})))
-
-(defn delete-record
-  [{:keys [db parameters] :as request}]
-  (mobile.data/delete-mobile-data-record db (:path parameters))
-  {:status 200
-   :result :success})
-
-(defn show-record-image
-  [{:keys [db parameters] :as request}]
-  (if-let [record (mobile.data/get-mobile-data-record-image db (:path parameters))]
+  (if-let [record (mobile.data/get-mobile-photo-record-image db (:path parameters))]
     (let [file-type    (last (clj.str/split (:file-name record) #"."))
           content-type (cond (or (= "jpg" file-type)
                                  (= "jpeg" file-type))
@@ -53,3 +38,51 @@
        :body    (clj.io/input-stream (:file-data record))})
     {:status 404
      :result :not-found}))
+
+(defn save-calls
+  [{:keys [db adb-shell-command adb-devices] :as request}]
+  (let [data (system.android/download-devices-calls request)]
+    (mobile.data/save-mobile-calls db data)
+    (if (seq adb-devices)
+      {:status 200
+       :result :success}
+      {:status 400
+       :result :no-device-found})))
+
+(defn get-calls
+  [{:keys [db] :as request}]
+  (let [data (mobile.data/get-mobile-calls db)]
+    {:status 200
+     :body   data}))
+
+(defn save-contacts
+  [{:keys [db adb-shell-command adb-devices] :as request}]
+  (let [data (system.android/download-devices-contacts request)]
+    (mobile.data/save-mobile-contacts db data)
+    (if (seq adb-devices)
+      {:status 200
+       :result :success}
+      {:status 400
+       :result :no-device-found})))
+
+(defn get-contacts
+  [{:keys [db] :as request}]
+  (let [data (mobile.data/get-mobile-contacts db)]
+    {:status 200
+     :body   data}))
+
+(defn save-sms
+  [{:keys [db adb-shell-command adb-devices] :as request}]
+  (let [data (system.android/download-devices-sms request)]
+    (mobile.data/save-mobile-sms db data)
+    (if (seq adb-devices)
+      {:status 200
+       :result :success}
+      {:status 400
+       :result :no-device-found})))
+
+(defn get-sms
+  [{:keys [db] :as request}]
+  (let [data (mobile.data/get-mobile-sms db)]
+    {:status 200
+     :body   data}))

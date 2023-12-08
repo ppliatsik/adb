@@ -1,5 +1,5 @@
-(ns com.adb.mobile.ui.view
-  (:require [com.adb.mobile.ui.model :as model]
+(ns com.adb.mobile.ui.calls.view
+  (:require [com.adb.mobile.ui.calls.model :as model]
             [com.adb.ui.form :as form]
             [com.adb.ui.routes :as routes]
             [com.adb.ui.navbar :as ui.navbar]
@@ -23,21 +23,12 @@
      [:span "Αναζήτηση"]]]])
 
 (defn- show-data-line
-  [{:keys [device-id file-name created-at]}]
-  [:tr {:key (str device-id file-name)}
+  [{:keys [id device-id name number duration]}]
+  [:tr {:key (str device-id id)}
    [:td.nowrap device-id]
-   [:td.nowrap file-name]
-   [:td.nowrap (.format (js/moment created-at) "DD/MM/YYYY HH:mm")]
-   [:td.nowrap [:a.button.is-info
-                {:href   (str "/api/mobile/" device-id "/" file-name "/image.png")
-                 :target "_blank"}
-                [form/icons {:icon     :camera
-                             :icon-css "fa"}]]]
-   [:td.nowrap [:a.button.is-danger
-                {:on-click (fn [_]
-                             (rf/dispatch [::model/delete-data-record device-id file-name]))}
-                [form/icons {:icon     :trash
-                             :icon-css "fa"}]]]])
+   [:td.nowrap name]
+   [:td.nowrap number]
+   [:td.nowrap duration]])
 
 (defn- show-data
   [{:keys [mobile-data]}]
@@ -46,13 +37,12 @@
     [:thead
      [:tr.has-text-centered
       [:th {:width "20%"} "Αναγνωριστικό συσκευής"]
-      [:th {:width "30%"} "Όνομα αρχείου"]
-      [:th {:width "15%"} "Ημ/νία δημιουργίας"]
-      [:th {:width "10%"} "Εικόνα"]
-      [:th {:width "10%"} "Διαγραφή"]]]
+      [:th {:width "30%"} "Όνομα"]
+      [:th {:width "20%"} "Αριθμός"]
+      [:th {:width "15%"} "Διάρκεια (δευτ/πτα)"]]]
     [:tbody
      (map (fn [data]
-            ^{:key (str (:device-id data) (:file-name data))}
+            ^{:key (str (:device-id data) (:id data))}
             (show-data-line data))
           mobile-data)]]])
 

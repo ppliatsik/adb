@@ -4,13 +4,22 @@
 
 (defn breadcrumbs-routes
   [route params]
-  (let [routes {:com.adb.ui/main-view {:name-route   "Home"
-                                       :icon-route   "fas fa-home"
-                                       :href         routes/main-view
-                                       :parent-route nil}
-                :com.adb.mobile/view  {:name-route   "Δεδομένα συσκευών"
-                                       :href         routes/mobile-data-view
-                                       :parent-route :com.adb.ui/main-view}}
+  (let [routes {:com.adb.ui/main-view     {:name-route   "Home"
+                                           :icon-route   "fas fa-home"
+                                           :href         routes/main-view
+                                           :parent-route nil}
+                :com.adb.mobile/photos    {:name-route   "Φωτογραφίες συσκευών"
+                                           :href         routes/mobile-photos
+                                           :parent-route :com.adb.ui/main-view}
+                :com.adb.mobile/sms       {:name-route   "SMS συσκευών"
+                                           :href         routes/mobile-sms
+                                           :parent-route :com.adb.ui/main-view}
+                :com.adb.mobile/calls     {:name-route   "Κλήσεις συσκευών"
+                                           :href         routes/mobile-calls
+                                           :parent-route :com.adb.ui/main-view}
+                :com.adb.mobile/contacts  {:name-route   "Επαφές συσκευών"
+                                           :href         routes/mobile-contacts
+                                           :parent-route :com.adb.ui/main-view}}
 
         default-route  (get routes :com.adb.ui/main-view)
         returned-route (get routes route default-route)]

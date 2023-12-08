@@ -4,28 +4,38 @@
 
 (def routes
   [["/mobile"
-    [""
-     {:name    ::mobile/mobile-data
+    ["/photos"
+     {:name    ::mobile/photos
       :swagger {:tags ["mobile"]}
-      :get     {:summary "Get mobile data"
-                :handler mobile.api/get-all}
-      :post    {:summary "Save data from mobile to db"
-                :handler mobile.api/save-all}}]
-    ["/:device-id/:file-name"
-     {:name    ::mobile/mobile-data-record
+      :get     {:summary "Get mobile photos"
+                :handler mobile.api/get-photos}
+      :post    {:summary "Save photos from mobile to db"
+                :handler mobile.api/save-photos}}]
+    ["/photos/:device-id/:file-name/image.png"
+     {:name    ::mobile/photo-record-image
       :swagger {:tags ["mobile"]}
-      :get     {:summary    "Get mobile data by id"
+      :get     {:summary    "Show mobile photo data image"
                 :parameters {:path {:device-id ::mobile/device-id
                                     :file-name ::mobile/file-name}}
-                :handler    mobile.api/get-record}
-      :delete  {:summary    "Delete mobile data by id"
-                :parameters {:path {:device-id ::mobile/device-id
-                                    :file-name ::mobile/file-name}}
-                :handler    mobile.api/delete-record}}]
-    ["/:device-id/:file-name/image.png"
-     {:name    ::mobile/mobile-data-record-image
+                :handler    mobile.api/show-photo-record-image}}]
+    ["/calls"
+     {:name    ::mobile/calls
       :swagger {:tags ["mobile"]}
-      :get     {:summary    "Show mobile data image"
-                :parameters {:path {:device-id ::mobile/device-id
-                                    :file-name ::mobile/file-name}}
-                :handler    mobile.api/show-record-image}}]]])
+      :get     {:summary "Get mobile calls"
+                :handler mobile.api/get-calls}
+      :post    {:summary "Save calls from mobile to db"
+                :handler mobile.api/save-calls}}]
+    ["/contacts"
+     {:name    ::mobile/contacts
+      :swagger {:tags ["mobile"]}
+      :get     {:summary "Get mobile contacts"
+                :handler mobile.api/get-contacts}
+      :post    {:summary "Save contacts from mobile to db"
+                :handler mobile.api/save-contacts}}]
+    ["/sms"
+     {:name    ::mobile/sms
+      :swagger {:tags ["mobile"]}
+      :get     {:summary "Get mobile sms"
+                :handler mobile.api/get-sms}
+      :post    {:summary "Save sms from mobile to db"
+                :handler mobile.api/save-sms}}]]])

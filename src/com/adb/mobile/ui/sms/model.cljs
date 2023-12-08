@@ -1,10 +1,10 @@
-(ns com.adb.mobile.ui.model
+(ns com.adb.mobile.ui.sms.model
   (:require [re-frame.core :as rf]
             [com.adb.ui.ajax]
             [com.adb.mobile :as mobile]))
 
-(def paths [:ui/forms ::mobile/view :data])
-(def data-path (rf/path [:ui/forms ::mobile/view :data]))
+(def paths [:ui/forms ::mobile/sms :data])
+(def data-path (rf/path [:ui/forms ::mobile/sms :data]))
 (def metadata
   {:data-path paths
    :fields    {}})
@@ -20,7 +20,7 @@
   ::get-data
   [data-path]
   (fn [{:keys [db]} _]
-    {:fx [[:dispatch [:ajax/get {:uri     "/api/mobile"
+    {:fx [[:dispatch [:ajax/get {:uri     "/api/mobile/sms"
                                  :success ::get-data-success
                                  :failure ::get-data-failure}]]]}))
 
@@ -42,7 +42,7 @@
   ::update-data
   [data-path]
   (fn [_ _]
-    {:fx [[:dispatch [:ajax/post {:uri     "/api/mobile"
+    {:fx [[:dispatch [:ajax/post {:uri     "/api/mobile/sms"
                                   :success ::update-data-success
                                   :failure ::update-data-failure}]]]}))
 
@@ -54,28 +54,6 @@
 
 (rf/reg-event-fx
   ::update-data-failure
-  [data-path]
-  (fn [_ [_ response]]
-    {:fx [[:dispatch [:ui/push-notification {:title "Error"
-                                             :body  (:reason response)
-                                             :type  :error}]]]}))
-
-(rf/reg-event-fx
-  ::delete-data-record
-  [data-path]
-  (fn [_ [_ device-id file-name]]
-    {:fx [[:dispatch [:ajax/delete {:uri     (str "/api/mobile/" device-id "/" file-name)
-                                    :success ::delete-data-record-success
-                                    :failure ::delete-data-record-failure}]]]}))
-
-(rf/reg-event-fx
-  ::delete-data-record-success
-  [data-path]
-  (fn [_ _]
-    {:fx [[:dispatch [::get-data]]]}))
-
-(rf/reg-event-fx
-  ::delete-data-record-failure
   [data-path]
   (fn [_ [_ response]]
     {:fx [[:dispatch [:ui/push-notification {:title "Error"

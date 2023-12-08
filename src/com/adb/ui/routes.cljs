@@ -18,9 +18,21 @@
   []
   (sec/set-config! :prefix "#")
 
-  (sec/defroute mobile-data-view "/mobile-data" []
-    (rf/dispatch [:com.adb.ui/set-view :com.adb.mobile/view])
-    (rf/dispatch [:com.adb.mobile.ui.model/init]))
+  (sec/defroute mobile-photos "/photos" []
+    (rf/dispatch [:com.adb.ui/set-view :com.adb.mobile/photos])
+    (rf/dispatch [:com.adb.mobile.ui.photos.model/init]))
+
+  (sec/defroute mobile-sms "/sms" []
+    (rf/dispatch [:com.adb.ui/set-view :com.adb.mobile/sms])
+    (rf/dispatch [:com.adb.mobile.ui.sms.model/init]))
+
+  (sec/defroute mobile-calls "/calls" []
+    (rf/dispatch [:com.adb.ui/set-view :com.adb.mobile/calls])
+    (rf/dispatch [:com.adb.mobile.ui.calls.model/init]))
+
+  (sec/defroute mobile-contacts "/contacts" []
+    (rf/dispatch [:com.adb.ui/set-view :com.adb.mobile/contacts])
+    (rf/dispatch [:com.adb.mobile.ui.contacts.model/init]))
 
   (sec/defroute main-view "/" []
     (rf/dispatch [:com.adb.ui/set-view :com.adb.ui/main-view]))

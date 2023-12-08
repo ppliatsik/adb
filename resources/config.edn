@@ -5,7 +5,8 @@
                 :host              "0.0.0.0"
                 :server-address    "http://localhost:8888"
                 :download-path     "resources/photos/"
-                :android-base-path "/sdcard/Pictures/"}
+                :android-base-path "/sdcard/Pictures/"
+                :adb-shell-command "content query --uri"}
 
  :db/pg {:server-name       "localhost"
          :database-name     "adb"
